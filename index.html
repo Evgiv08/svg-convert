@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        textarea {
+            width: 750px;
+            height: 450px;
+        }
+    </style>
+    <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>test electron</h1>
+<textarea name="textarea" title="textarea"></textarea>
+
+<button id="go">Погнали блэд!!!</button>
+<div class="svg-conteiner"></div>
+</body>
+
+<script src="jquery.js"></script>
+<script>
+    $('#go').on('click', function () {
+        $('.svg-conteiner').append($('textarea').val());
+        $('svg mask').each((index, elem)=>{
+            let initialId =  $(elem).attr("id");
+            let id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            $(elem).attr("id", id);
+            $('svg path').each((index, elem)=>{
+                if( $(elem).attr("id") && $(elem).attr("id") === initialId) {
+                    $(elem).attr("id", id);
+                }
+                if( $(elem).attr("mask") && $(elem).attr("mask") === `url(#${initialId})`) {
+                    $(elem).attr("mask", "url(#" + id + ")");
+                }
+            });
+            $('svg use').each((index, elem)=>{
+                if($(elem).attr("xlink:href") && $(elem).attr("xlink:href")===`#${initialId}`) {
+                    $(elem).attr("xlink:href", "#" + id);
+                }
+            })
+        });
+        $('textarea').val($('.svg-conteiner').html());
+        $('.svg-conteiner').html();
+    });
+</script>
+</html>
