@@ -28,7 +28,7 @@
         $('.svg-conteiner').append($('textarea').val());
         $('svg mask').each((index, elem)=>{
             let initialId =  $(elem).attr("id");
-            let id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
+            let id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 7);
             $(elem).attr("id", id);
             $('svg path').each((index, elem)=>{
                 if( $(elem).attr("id") && $(elem).attr("id") === initialId) {
