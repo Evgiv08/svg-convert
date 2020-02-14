@@ -44,6 +44,25 @@
                 }
             })
         });
+        
+         $('svg path').each((index, elem)=>{
+            let initialId =  $(elem).attr("id");
+            let id = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 7);
+            $(elem).attr("id", id);
+            $('svg path').each((index, elem)=>{
+                if( $(elem).attr("id") && $(elem).attr("id") === initialId) {
+                    $(elem).attr("id", id);
+                }
+                if( $(elem).attr("mask") && $(elem).attr("mask") === `url(#${initialId})`) {
+                    $(elem).attr("mask", "url(#" + id + ")");
+                }
+            });
+            $('svg use').each((index, elem)=>{
+                if($(elem).attr("xlink:href") && $(elem).attr("xlink:href")===`#${initialId}`) {
+                    $(elem).attr("xlink:href", "#" + id);
+                }
+            })
+        });
         $('textarea').val($('.svg-conteiner').html());
         $('.svg-conteiner').html();
     });
